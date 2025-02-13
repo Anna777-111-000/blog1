@@ -1,8 +1,13 @@
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 # https://azinkin.ru/orm.html
-
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    bio = models.TextField(blank=True, null=True) 
+def __str__(self):
+        return self.name
+    
 class Category(models.Model):
     title = models.CharField(
         verbose_name='название',
@@ -19,11 +24,13 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+        
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(unique=True)
 
-    class Meta:
-        verbose_name = 'категорию'
-        verbose_name_plural = 'категории'
-
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
     title = models.CharField(
@@ -55,3 +62,15 @@ class Post(models.Model):
         verbose_name = 'пост'
         verbose_name_plural = 'публикации'
         unique_together = ('category', 'slug')
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments') 
+    author_name = models.CharField(max_length=100)
+    author_email = models.EmailField(blank=True, null=True)
+    content = models.TextField()
+    publication_date = models.DateTimeField(default=timezone.now)
+    is_approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Comment by {self.author_name} on {self.post.title}"
+
