@@ -18,13 +18,23 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'publication_date'
-    ordering = ('-publication_date',)  
-    fieldsets = ( 
-        ('Основная информация', {
-            'fields': ('title', 'slug', 'category', 'content')
-        }),
-        ('Дополнительная информация', {
-            'fields': ('picture', 'publication_date', 'is_published'),
-            'classes': ('collapse',) 
-        }),
-    )
+    ordering = ('-publication_date',)
+    
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'bio')
+    search_fields = ('name', 'bio')
+
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
+    search_fields = ('name',)
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('post', 'author_name', 'publication_date', 'is_approved')
+    list_filter = ('publication_date', 'is_approved')
+    search_fields = ('author_name', 'author_email', 'content')
