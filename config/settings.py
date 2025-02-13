@@ -30,7 +30,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Application definitio
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -117,6 +118,10 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 
 USE_TZ = True
+
+   LOCALE_PATHS = [
+            BASE_DIR / 'locale', 
+        ]
 
 
 # Static files (CSS, JavaScript, Images)
