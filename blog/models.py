@@ -5,7 +5,8 @@ from django.utils import timezone
 class Author(models.Model):
     name = models.CharField(max_length=100)
     bio = models.TextField(blank=True, null=True) 
-def __str__(self):
+    
+    def __str__(self):
         return self.name
     
 class Category(models.Model):
@@ -21,8 +22,7 @@ class Category(models.Model):
         verbose_name='URL',
         unique=True,
     )
-
-    def __str__(self):
+        def __str__(self):
         return self.title
         
 class Tag(models.Model):
@@ -49,13 +49,12 @@ class Post(models.Model):
         verbose_name='URL',
         unique=False,
     )
-    category = models.ForeignKey(
+    category = models.models.ForeignKey(
         verbose_name='категория',
         to='Category',
         on_delete=models.CASCADE,
     )
-
-    def __str__(self):
+   def __str__(self):
         return self.title
 
     class Meta:
